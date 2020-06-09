@@ -8,28 +8,27 @@ var bombillos_content = document.querySelector(".bombillos_content");
 
 
 
-cargarBombillos();
-cargarCuartos();
+cargarBombillos(); //Se llama la función cargar bombillo al iniciar la pagina para que se listen todos los bombillos registrados
+cargarCuartos(); //Se listan todos los bombillos registrados
 
-//BOTÓN REDONDO PEQUEÑO (AGREGA CUARTOS)
+//BOTÓN GREGAR CUARTOS
 agregar_cuarto.addEventListener("click", function(e){
     e.preventDefault();
-    form_cuarto.classList.toggle("form_cuarto_visible");
+    form_cuarto.classList.toggle("form_cuarto_visible");//Se hace visible el input para agregar cuartos
     cuarto_item.focus();
-    agregar_cuarto.style.display = "none";
+    agregar_cuarto.style.display = "none"; //Se oculta el boton + mientras está visible el input de agregar cuartos
 });
 
 //FORMULARIO AGREGAR CUARTOS
 form_cuarto.addEventListener("submit", function(e){
     e.preventDefault();
         
-    var datos = new FormData(form_cuarto);
-    console.log(...datos);
-    fetch("controller/cuartoController/setCuarto.php", {
+    var datos = new FormData(form_cuarto); //Se recoge el nombre del caurto ingresado en el input
+    fetch("controller/cuartoController/setCuarto.php", { //url a donde van los datos
         method: "POST",
         body: datos
     })
-    .then(res => res.json())
+    .then(res => res.json()) //Se covierte la respuesta del servidor a json
     .then(data => {
         if (data == true) {
             console.log("Cuarto agregado correctamente");
@@ -38,11 +37,11 @@ form_cuarto.addEventListener("submit", function(e){
         } else {
             alert("Por favor ingrese el nombre del cuarto");
         }
-        cargarCuartos()
+        cargarCuartos() //Se llama la función de cargar cuartos para que se listen los cuartos nuevamente incluyendo el cuarto nuevo
     });
 
-    form_cuarto.classList.toggle("form_cuarto_visible");
-    agregar_cuarto.style.display = "block";
+    form_cuarto.classList.toggle("form_cuarto_visible"); //Se oculta el input agregar cuarto
+    agregar_cuarto.style.display = "block"; // Se hace visible el boton + 
 
 });
 
@@ -51,24 +50,25 @@ form_cuarto.addEventListener("submit", function(e){
 
 //___________________________________MODAL AGREGAR BOMBILLOS  (INICIA)___________________________________________
 
+//Este es el formulario que se muestra cuando se abre el modal de la derecha una vez que se hace click en el botón + grande
 //AGREGAR BOMBILLOS
 var formAddBombillo = document.querySelector("#formAddBombillo");
 formAddBombillo.addEventListener("submit", function(e){
     e.preventDefault();
 
-    var datos = new FormData(this);
+    var datos = new FormData(this); //Se recogen los datos ingresados en el formulario
 
-    fetch("controller/bombilloController/setBombillo.php", {
+    fetch("controller/bombilloController/setBombillo.php", { //url a donde van los datos
         method: "POST",
         body: datos
     })
-    .then(res => res.json())
+    .then(res => res.json()) 
     .then(data => {
         if (data == true) {
             console.log("Bombillo agregado correctamente");
             cargarBombillos();
         } else if (data == false) {
-            console.log("El bombillo ya existe");
+            alert("El bombillo ya existe");
         } else {
             alert(data);
         }
@@ -79,19 +79,17 @@ formAddBombillo.addEventListener("submit", function(e){
 
 });
 
-//BOTÓN AZUL REDONDO CON EL + (ABRE EL MODAL)
+//BOTÓN ABRIR MODAL (botón azul grande con el +)
 var modal_content = document.querySelector(".modal_content");
 var modal = document.querySelector(".modal");
 var agregar_bombillo = document.querySelector(".agregar_bombillo");
 
-
-
 agregar_bombillo.addEventListener("click", function(){
     
     //modal.classList.toggle("modal_cerrar");
-    modal_content.style.display = "block";
-    modal.style.transform = "translateX(0%)";
-    document.querySelector("#formAddBombillo").style.display = "flex";
+    modal_content.style.display = "block"; //Antes de abrir el modal, el formulario está oculto, así que se hace visible
+    modal.style.transform = "translateX(0%)"; //Desplaza el modal a la pantalla
+    document.querySelector("#formAddBombillo").style.display = "flex"; 
         
     
     
